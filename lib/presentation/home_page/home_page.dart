@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../../widgets/selection_group_provider.dart';
 import '../../widgets/single_selection_box.dart';
+import '../word_matching_screen/word_matching_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,48 +38,68 @@ class _HomePageState extends State<HomePage> {
   ];
 
   late List<TextEditingController> list;
+
   List<TextEditingController> populateList() {
     List<TextEditingController> list = [];
-      final textController1 = TextEditingController();
-      final textController2 = TextEditingController();
-      final textController3 = TextEditingController();
-      final textController4 = TextEditingController();
-      final textController5 = TextEditingController();
-      final textController6 = TextEditingController();
-      final textController7 = TextEditingController();
-      final textController8 = TextEditingController();
-      list.add(textController1);
-      list.add(textController2);
-      list.add(textController3);
-      list.add(textController4);
-      list.add(textController5);
-      list.add(textController6);
-      list.add(textController7);
-      list.add(textController8);
+    final textController1 = TextEditingController();
+    final textController2 = TextEditingController();
+    final textController3 = TextEditingController();
+    final textController4 = TextEditingController();
+    final textController5 = TextEditingController();
+    final textController6 = TextEditingController();
+    final textController7 = TextEditingController();
+    final textController8 = TextEditingController();
+    list.add(textController1);
+    list.add(textController2);
+    list.add(textController3);
+    list.add(textController4);
+    list.add(textController5);
+    list.add(textController6);
+    list.add(textController7);
+    list.add(textController8);
     return list;
-}
+  }
 
+  List<List<String>> createGrid(List<String> inputList) {
+    final List<List<String>> result = [];
+    for (String str in inputList) {
+      List<String> charList = str.split('').toList();
+      result.add(charList);
+    }
+    return result;
+  }
 
-late bool isAndroid;
+  late bool isAndroid;
 
   @override
   void initState() {
     super.initState();
     isAndroid = Platform.isAndroid;
     list = populateList();
-
   }
+
+  @override
+  void dispose() {
+    // list.clear();
+    super.dispose();
+  }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  void submitForm(){
-    if(_formKey.currentState!.validate()){
 
+  bool validateForm() {
+    if (_formKey.currentState!.validate()) {
+      return true;
     }
+    return false;
   }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height * 0.18;
     return Scaffold(
+
         appBar: AppBar(
+          scrolledUnderElevation:0.0,
           title: const Text("MOBIGIC"),
         ),
         body: SizedBox(
@@ -141,7 +162,7 @@ late bool isAndroid;
                       ),
                       Container(
                         width: double.infinity,
-                        height:  height,
+                        height: height,
                         decoration: BoxDecoration(
                           color: chancesSelectionColors[maxChances - 1]!
                               .withOpacity(0.2),
@@ -196,9 +217,8 @@ late bool isAndroid;
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-
                             Container(
-                              height: isAndroid ? height * 2.25 :  height * 2,
+                              height: isAndroid ? height * 2.25 : height * 2,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 color: Colors.grey.shade200,
@@ -212,7 +232,6 @@ late bool isAndroid;
                                 scrollDirection: Axis.vertical,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
-
                                   children: [
                                     const Text(
                                       'Fill letters row-wise',
@@ -227,28 +246,29 @@ late bool isAndroid;
                                         children: [
                                           for (int i = 1; i <= maxChances; i++)
                                             TextFormField(
-                                              controller: list[i-1],
+                                              controller: list[i - 1],
+                                              textCapitalization: TextCapitalization.characters,
                                               maxLength: wordLen,
                                               keyboardType: TextInputType.text,
                                               inputFormatters: [
-                                                FilteringTextInputFormatter.allow(
-                                                    RegExp(r'[a-zA-Z]')),
+                                                FilteringTextInputFormatter
+                                                    .allow(RegExp(r'[a-zA-Z]')),
                                               ],
                                               decoration: InputDecoration(
-                                                hintText: 'Row No. $i',
-                                                border: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.circular(10)
-                                                )
-                                              ),
+                                                  hintText: 'Row No. $i',
+                                                  border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10))),
                                               validator: (value) {
                                                 if (value!.isEmpty) {
                                                   return 'This field is required';
-                                                } else if (value.length != wordLen) {
+                                                } else if (value.length !=
+                                                    wordLen) {
                                                   return 'Enter $wordLen alphabets';
                                                 }
                                                 return null;
                                               },
-
                                             )
                                         ],
                                       ),
@@ -261,18 +281,32 @@ late bool isAndroid;
                               alignment: Alignment.center,
                               child: SizedBox(
                                 width: double.infinity,
-                                height: isAndroid ? height * 0.4 : height * 0.35,
+                                height: height * 0.4,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(right: 30, left: 30, top: 4, bottom: 4),
+                                  padding: const EdgeInsets.only(
+                                      right: 30, left: 30, top: 4, bottom: 4),
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       foregroundColor: Colors.white,
                                       backgroundColor: Colors.indigo,
                                     ),
                                     onPressed: () {
-                                      submitForm();
-                                      for(int i = 1; i <= maxChances; i++){
-                                        print(list[i-1].text);
+                                      if (validateForm()) {
+                                        List<String> row = [];
+                                        for (int i = 1; i <= maxChances; i++) {
+                                          row.add(list[i - 1].text.trim().toUpperCase());
+                                        }
+                                        List<List<String>> grid =
+                                            createGrid(row);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  WordMatchingScreen(
+                                                      grid: grid,
+                                                  m: wordLen,
+                                                  n: maxChances)),
+                                        );
                                       }
                                     },
                                     child: const Text("Create Grid"),
