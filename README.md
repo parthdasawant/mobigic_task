@@ -1,5 +1,16 @@
 # mobigic_task
 
+## Features
+
+1. **Splash Screen**: The application starts with a splash screen.
+2. **Grid Creation**: Users enter numbers `m` and `n` to create an `m` x `n` grid.
+3. **Alphabet Input**: Users input alphabets to fill the grid, with one row at a time.
+4. **Display Grid**: The filled grid is displayed to the user.
+5. **Word Search**: Users can input a text to search for in the grid.
+6. **Highlighting**: If the text is found in the grid in a readable left-to-right (east), top-to-bottom (south), or diagonal (south-east) direction, the corresponding alphabets are highlighted.
+7. **Reset**: At any point, users can reset the setup, and the application from the beginning.
+
+
 ## Demo (gif may take time to load)
 ### Working demo of the task
 
