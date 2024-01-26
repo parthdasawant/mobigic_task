@@ -39,6 +39,9 @@ class CustomSearchBox extends StatelessWidget {
         // onChanged: (value){
         //   print(value);
         // },
+        onTapOutside: (value){
+          bloc.add(SearchTextEvent(grid: grid, text: searchController.text.trim().toUpperCase()));
+        },
         onTap: (){
           bloc.add(SearchTextEvent(grid: grid, text: ""));
           searchController.text = "";

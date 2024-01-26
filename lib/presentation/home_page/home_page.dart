@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     Colors.green[500],
     Colors.teal[300],
     Colors.teal[500],
-    Colors.pink[300]
+    Colors.orange[400],
   ];
   var chancesSelectionColors = [
     Colors.green[700],
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.fromLTRB(
                                   15.0, 10.0, 0.0, 10.0),
                               child: Text(
-                                'Word Length',
+                                'Max Columns',
                                 style: TextStyle(
                                   fontSize: 22.0,
                                   fontWeight: FontWeight.bold,
@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.fromLTRB(
                                   15.0, 10.0, 0.0, 10.0),
                               child: Text(
-                                'Max Attempts',
+                                'Max Rows',
                                 style: TextStyle(
                                   fontSize: 22.0,
                                   fontWeight: FontWeight.bold,
@@ -309,7 +309,9 @@ class _HomePageState extends State<HomePage> {
                                         );
                                       }
                                     },
-                                    child: const Text("Create Grid"),
+                                    child:  Text("Create Grid",
+                                        style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.white)
+                                    ),
                                   ),
                                 ),
                               ),

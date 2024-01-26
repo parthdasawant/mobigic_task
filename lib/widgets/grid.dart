@@ -26,14 +26,17 @@ class Grid extends StatelessWidget {
             crossAxisCount: m
         ),
         itemBuilder: (context, index){
+        bool isContains = matchedIndex.contains(index);
           return Container(
             decoration: BoxDecoration(
               border: Border.all(),
-                  color: matchedIndex.contains(index) ? Colors.green: Colors.white
+                  color: isContains ? Colors.green: Colors.white
             ),
             // color: Colors.grey.shade200,
             child: Center(child: Text(flattenedList[index],
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+              style: TextStyle(fontSize: (58 - (m * 4)), fontWeight: FontWeight.bold,
+              color: isContains ?  Colors.white : Colors.grey
+              )
               ,)),
           );
         });

@@ -35,7 +35,7 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation:0.0,
+        scrolledUnderElevation: 0.0,
         title: const Text("MOBIGIC"),
       ),
       backgroundColor: Colors.white,
