@@ -39,12 +39,6 @@ class MyApp extends StatelessWidget {
       ),
       home: const HomePage(),
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        AppLocalizationDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
       supportedLocales: const [
         Locale(
           'en',
